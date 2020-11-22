@@ -15,6 +15,9 @@ def generate_output(students):
 		fin -= iter_size
 		partitions.append(iter_size)
 
+	
+	S_max = np.random.randint(0, 100000) / 1000
+	print(S_max)
 	print(partitions)
 
 	return students
