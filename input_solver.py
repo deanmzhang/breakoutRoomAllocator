@@ -79,11 +79,16 @@ def generate_output(students):
 		coin_flip = np.random.randint(0, 2)
 		if coin_flip == 0:
 			new_worst_stress = np.random.randint(worst_stress * 1000 * 1.1, 100_000) / 1000
-			new_happiness = np.random.randint(best_happiness * 1000, best_happiness * 1000 * 1.6) / 1000
+			new_happiness = np.random.randint(best_happiness * 1000, min(98_000, best_happiness * 1000 * 1.3)) / 1000
 			rest_of_edge_tuples.append((new_worst_stress, new_happiness))
 		else:
 			new_best_stress = np.random.randint(best_stress * 0.2 * 1000, best_stress * 1.3 * 1000) / 1000
+				
+			while str(new_best_stress) == "0.0":
+				new_best_stress = np.random.randint(best_stress * 0.2 * 1000, best_stress * 1.3 * 1000) / 1000
+
 			new_happiness = np.random.randint(0, worst_happiness * 1000 * 0.8) / 1000
+			
 			rest_of_edge_tuples.append((new_best_stress, new_happiness))
 	print(rest_of_edge_tuples)
 
