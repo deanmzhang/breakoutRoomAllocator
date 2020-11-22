@@ -110,7 +110,7 @@ def generate_output(students):
 		for j in range(len(con_students)):
 			for k in range(j + 1, len(con_students)):
 				print(con_students[j], con_students[k])
-				q = "{0} {1} {2} {3}".format(con_students[j], con_students[k], h[nut], s[nut])
+				q = "{0} {1} {2} {3}".format(con_students[j], con_students[k], h[nut], '%.3f' % s[nut])
 				ans.append(q)
 				fill_it_in[con_students[j]][con_students[k]] = q
 				nut += 1
