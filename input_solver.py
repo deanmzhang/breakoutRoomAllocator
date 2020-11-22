@@ -18,7 +18,25 @@ def generate_output(students):
 	
 	S_max = np.random.randint(0, 100000) / 1000
 	print(S_max)
+
+	k = len(partitions)
 	print(partitions)
+
+	k_max = S_max / k
+	print(k_max)
+
+	#
+	for p in partitions:
+		s = 0
+		l = []
+		for i in range(p * (p - 1) // 2):
+			n = np.random.randint(0, 100000) / 1000
+			s += n
+			l.append(n)
+		l = [el * k_max / s for el in l]
+		
+		print(l)
+		print(sum(l))	
 
 	return students
 
