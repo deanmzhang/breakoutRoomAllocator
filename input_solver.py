@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 import numpy as np
 import sys
+from parse import *
+from utils import *
+import random
 
 def generate_output(students):
 	k = np.random.randint(1, students)
