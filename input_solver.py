@@ -41,10 +41,6 @@ def generate_output(students):
 		print(l) # list of stresses
 		print(sum(l)) # about equal to k_max
 
-	for p in partitions:
-		for _ in range(p * (p - 1) // 2):
-			n = np.random.randint()
-
 	print()
 	return students
 
