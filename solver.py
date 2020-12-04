@@ -42,31 +42,43 @@ class BreakoutRoom:
         return edges
 
     # adds a student to this breakout room; returns new edge list
-    def add_student(self, edges, student):
+    def add_student(self, edges, student, s, k):
+        """Given the edges dictionary, stress budget s, and number of breakout rooms k, adds the specified student to
+        this breakout room."""
+        if student in self.students:
+            print("This student is already in this breakout room")
+            return
+        
+        # used for calculating the summed phantom edges
+        # key: the node connected to this breakout room
+        # value: dictionary with "happiness" and "stress"
+        new_edges = {}
+
         for edge in edges:
             u, v = edge[0], edge[1]
             if type(u) == BreakoutRoom and u.id == self.id:
                 if v == student:
+                    student_found = True
                     # Initialize variables u=BreakoutRoom and v=student
-                    # Add v's happiness&stress level to BreakoutRoom's happiness&stress level, 
-                    # according to our edge weight connecting (u, v)
                     # Check that this does not exceed our S_max / k. 
                     # If it does, then we return an Exception saying we exceed S_max / k
                     #
                     # Otherwise,
-                    # Add v to the student set
+                    # Add v to the student set (actually, this is done at the end of the function)
                     # Add v's happiness&stress level to BreakoutRoom's happiness&stress level, 
                     # according to our edge weight connecting (u, v)
                     # Delete edge u-v
                     #
-                    k = 11 # what is k??? For now lets brute-force it
                     if self.stress + edges[edge]["stress"] > s / k:
+                        # maybe change this to throwing an actual Python exception?
                         print("Stress budget exceeded in this breakout room")
                         return
+                    
                     self.happiness += edges[edge]["happiness"] # kinda forget what get_edge_data dictionary looks like
                     self.stress += edges[edge]["stress"]
-                    
-                elif 'TODO':
+                    del edges[edge]
+
+                if v not in self.students:
                     # Loop through all studentss&breakout rooms not in this BreakoutRoom, 
                     # call our current iteration student/breakout room: w
                     # Find edge (w, u)/(u, w) and (w, v)/(v, w)
@@ -78,15 +90,40 @@ class BreakoutRoom:
                     #
                     # After finishing the loop, we re-sort by our edge ratios
                     # Return our new edge list
-                    pass
+                    if v not in new_edges:
+                        new_edges[v] = {"happiness": 0, "stress": 0}
+                    old_edge = edges[edge]
+                    new_edges[v]["happiness"] += old_edge["happiness"]
+                    new_edges[v]["stress"] += old_edge["stress"]
+                    del edges[edge]
 
             elif type(v) == BreakoutRoom and v.id == self.id:
+                # same code as above, just if u and v are swapped
+                # (there might be a cleaner way to code this rather than this copy and paste shit)
                 if u == student:
-                    # Connect u and v
-                    pass
-        self.stress += 11
-        self.happiness += 11
+                    if self.stress + edges[edge]["stress"] > s / k:
+                        # maybe change this to throwing an actual Python exception?
+                        print("Stress budget exceeded in this breakout room")
+                        return
+                    
+                    self.happiness += edges[edge]["happiness"] # kinda forget what get_edge_data dictionary looks like
+                    self.stress += edges[edge]["stress"]
+                    del edges[edge]
+
+                if u not in self.students:
+                    if u not in new_edges:
+                        new_edges[u] = {"happiness": 0, "stress": 0}
+                    old_edge = edges[edge]
+                    new_edges[u]["happiness"] += old_edge["happiness"]
+                    new_edges[u]["stress"] += old_edge["stress"]
+                    del edges[edge]
+                    
         self.students.add(student)
+        
+        for v, weights in new_edges.items():
+            edges[(self, v)] = weights
+        
+        return edges
 
 def solve(G, s):
     """
