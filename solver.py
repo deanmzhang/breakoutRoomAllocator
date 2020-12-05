@@ -84,8 +84,8 @@ class BreakoutRoom:
                 self.stress += self.edges[edge]["stress"]
                 del self.edges[edge]
 
-            elif (((type(u) == BreakoutRoom and u.id == self.id) or u == student)
-                and v not in self.students):
+            elif ((self.is_self(u) or u == student)
+                and (v not in self.students and not self.is_self(v))):
                 # Loop through all studentss&breakout rooms not in this BreakoutRoom,
                 # call our current iteration student/breakout room: w
                 # Find edge (w, u)/(u, w) and (w, v)/(v, w)
@@ -116,8 +116,8 @@ class BreakoutRoom:
                 self.stress += self.edges[edge]["stress"]
                 del self.edges[edge]
 
-            elif (((type(v) == BreakoutRoom and v.id == self.id) or v == student)
-                and u not in self.students):
+            elif ((self.is_self(v) or v == student)
+                and (u not in self.students and not self.is_self(u))):
                 if u not in new_edges:
                     new_edges[u] = {"happiness": 0, "stress": 0}
                 old_edge = self.edges[edge]
@@ -131,6 +131,9 @@ class BreakoutRoom:
             self.edges[(self, v)] = weights
 
         return self.edges
+
+    def is_self(self, room):
+        return type(room) == BreakoutRoom and room.id == self.id
 
 def solve(G, s):
     """

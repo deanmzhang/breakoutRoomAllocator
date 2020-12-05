@@ -65,9 +65,22 @@ def single_room():
             (1, 3): weight_dict(4, 0),
             (2, 3): weight_dict(0, 11)}
 
+    print("Original edges:")
+    pp.pprint(edges)
+    print()
+
     b0 = BreakoutRoom(0, edges, 0)
+    print(f"After placing student 0 into breakout 0:")
+    pp.pprint(edges)
+    print()
+
     for i in range(1, 4):
         b0.add_student(i, s, k)
+        print(f"After placing student {i} into breakout 0:")
+        pp.pprint(edges)
+        print()
+
+    print("Testing breakout room happiness and stress levels...")
     assert b0.happiness == 1 + 11 + 94 + 11 + 4 + 0
     assert b0.stress == 11 + 23 + 11 + 11 + 0 + 11
     print("PASSED\n")
