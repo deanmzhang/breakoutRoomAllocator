@@ -10,7 +10,7 @@ import glob
 
 class BreakoutRoom:
     def __init__(self, id, edges, first_student):
-        self.id = 0 #Counter; increment by 1 every time we create a new BreakoutRoom
+        self.id = id #Counter; increment by 1 every time we create a new BreakoutRoom
         self.stress = 0
         self.happiness = 0
         self.students = set()
@@ -62,7 +62,6 @@ class BreakoutRoom:
         # value: dictionary with "happiness" and "stress"
         new_edges = {}
 
-        # breakpoint()
         for edge in list(self.edges):
             u, v = edge[0], edge[1]
             if (type(u) == BreakoutRoom and u.id == self.id) and (v == student):

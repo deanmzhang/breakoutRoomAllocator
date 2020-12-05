@@ -42,6 +42,13 @@ def print_two_rooms():
     pp.pprint(edges)
     print()
 
+    print("Testing breakout room happiness and stress levels...")
+    assert b0.happiness == 1
+    assert b0.stress == 11
+    assert b1.happiness == 0
+    assert b1.stress == 11
+    print("PASSED")
+
 
 if __name__ == "__main__":
     print_two_rooms()
