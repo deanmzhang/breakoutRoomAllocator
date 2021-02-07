@@ -23,7 +23,6 @@ def is_valid_solution(D, G, s, rooms):
             return False
     return True
 
-
 def calculate_happiness(D, G):
     """
     Calculates the total happiness in mapping D by summing the happiness of each room.
