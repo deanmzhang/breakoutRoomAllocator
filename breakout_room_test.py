@@ -1,7 +1,6 @@
 import pprint
 from solver import BreakoutRoom
 
-
 def weight_dict(happiness, stress):
     return {"happiness": happiness, "stress": stress}
 
@@ -19,7 +18,7 @@ def two_rooms_quality_test():
             (1, 2): weight_dict(2, 1),
             (1, 3): weight_dict(3, 1),
             (2, 3): weight_dict(5, 1)}
-            
+
     print("Original edges:")
     pp.pprint(edges)
     print()
@@ -102,7 +101,7 @@ def test_max_stress_capacity():
             (1, 2): weight_dict(2, 1),
             (3, 1): weight_dict(3, 1),
             (2, 3): weight_dict(5, 1)}
-            
+
     print("Original edges:")
     pp.pprint(edges)
     print()
@@ -133,7 +132,7 @@ def test_max_stress_capacity():
     assert b1.happiness == 0
     assert b1.stress == 0
     print("FAILED\n")
-    
+
 
 if __name__ == "__main__":
     two_rooms_quality_test()

@@ -36,7 +36,6 @@ class BreakoutRoom:
         # Find the edge from (w, student1)/(student1, w)
         # Delete edge from (w, student1)/(student1, w)
         # Add a new edge (w, this breakout room) with the same weight of edge (w, student1)
-        #
         # Return new edge list
         self.students.add(student1)
         for edge in list(self.edges.keys()):
@@ -178,29 +177,29 @@ def solve(G, s):
     """def get_happiness(edge):
         happiness = G.get_edge_data(edge[0], edge[1])['happiness']
         return happiness
-    
+
     def get_stress(edge):
         stress = G.get_edge_data(edge[0], edge[1])['stress']
         return stress"""
 
     sorted_edges = sorted(list(G.edges), key=get_ratio_initial, reverse=True)
-    
+
     # Pseudocode
     # Outer Loop O: We want to loop from k = 0 to k = n, where k is our current maximum allowed breakout rooms
     # Initialize a counter, called "current_k". This checks the current amount of breakout rooms we've created
-    
+
     # Take our edges dictionary, and sort in descending order of happiness : stress ratio
     # Call this edge we took out of the edge dictionary: highest_ratio_edge
     # First, check if we have met our capacity. In other words, if current_k == k, then we cannot create any more breakout rooms!
-    
+
     # If current_k < k, then if highest_ratio_edge connects two students, then form a new breakout room with these new students.
     # Else if current_k == k OR s_max/k is exceeded, then we throw out highest_ratio_edge, because we cannot form any more breakout rooms if we have met our capacity of k rooms already created
-    
+
     # If highest_ratio_edge contains a breakout_room and a student, then we can simply add this student to the breakout room IF s_max/k isn't exceeded
     # Else, if S_max/k is exceeded, throw out highest_ratio_edge
 
     # If highest_ratio_edge contains a breakout_room and a breakout_room, throw this edge out for now because this is undefined behavior. We may need to implement this later if it improves our alg.
-    
+
     # Now, we re-sort the edges dictionary again in descending order of happiness : stress ratio
     # Continue this process until:
     # a) all edges are thrown away. This means that there is no valid solution for these amount of k rooms, so we must increase k = k + 1 and repeat
@@ -213,7 +212,7 @@ def solve(G, s):
 
         sorted_edges = sorted(e.keys(), key=get_ratio, reverse=True)
         highest_ratio_edge = sorted_edges[0]
-        
+
         if current_k < k:
             u, v = highest_ratio_edge[0], highest_ratio_edge[1]
             if type(u) == int and type(v) == int:
@@ -237,10 +236,10 @@ def solve(G, s):
                 except CustomError: #CustomError is raised when s_max/k limit is violated
                     del e[highest_ratio_edge]
             if type(u) == BreakoutRoom and type(v) == BreakoutRoom:
-                # For now, we're gonna throw out highest_ratio_edge b/c this is undefined behavior. 
+                # For now, we're gonna throw out highest_ratio_edge b/c this is undefined behavior.
                 # Might keep highest_ratio_edge later on if this improves our algo
                 del e[highest_ratio_edge]
-        
+
         if current_k >= k:
             del e[highest_ratio_edge]
 
@@ -254,17 +253,17 @@ def solve(G, s):
             for student in sorted(d.keys()):
                 D[student] = d[student]
             return D, k
-            
-        
-        
 
-    
+
+
+
+
     """for ed in list(sorted_edges):
         print(ed, G.get_edge_data(ed[0], ed[1])['happiness'], G.get_edge_data(ed[0], ed[1])['stress'], get_ratio(ed))
         print(sorted_edges)
         pp.pprint(e)
         print("***")"""
-    
+
 
     # key: breakout room number, value: set of student numbers
     # New ideas: 1) Brute force k, in other words, we increment k if our current k value does not return a valid output
